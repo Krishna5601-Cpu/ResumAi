@@ -18,8 +18,15 @@ async function registerUserController(req, res) {
   }
 
   const isUserAlreadyExists = await userModel.findOne({
-    $or: [{}, {}],
+    $or: [{ username }, { email }],
   });
+
+  if (isUserAlreadyExists) {
+    return res.status(400).json({
+      success: false,
+      message: "user already exists with this username or email",
+    });
+  }
 }
 
 module.exports = {
