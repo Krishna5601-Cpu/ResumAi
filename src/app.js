@@ -1,10 +1,11 @@
 const express = require("express");
-// Importing Packages -
+const authRouter = require("./routes/auth.routes");
 
 const app = express();
-// Creates App Engine or Creating Server's Instance -
 
 app.use(express.json);
-// Json Middleware
+
+/* using all the routes here - */
+app.use("/api/auth", authRouter);
 
 module.exports = app;
