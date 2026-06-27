@@ -2,7 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth.routes");
 
-const app = express();
+const app = express(); // Create server instance 
 
 app.use(express.json);
 app.use(cookieParser());
