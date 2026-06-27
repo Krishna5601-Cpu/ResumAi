@@ -125,10 +125,31 @@ async function logoutUserController(req, res) {
   res.status(200).json({
     message: "User logged out successfully"
   })
+};
+
+/**
+ * @name getMeUserController
+ * @route /api/auth/get-me
+ * @description fetches the details of the currently logged in user
+ * 
+ */
+
+async function getMeController(req, res) {
+  const user = userModel.findById(req.user.id)
+
+  res.status(200).json({
+    message: "User details fetched successfully",
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    }
+  })
 }
 
 module.exports = {
   registerUserController,
   loginUserController,
   logoutUserController,
+  getMeController,
 };
