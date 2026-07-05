@@ -1,13 +1,15 @@
-import { Children, createContext, useState } from "react";
+import { createContext, useState } from "react";
 
-export AuthContext = createContext();
+export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
-
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, SetLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Fixed capital 'S'
 
   return (
-    <AuthContext.Provider value={{user, setUser, loading, setUser}} > { children} </AuthContext.Provider>
-  )
-}
+    // Fixed the value object to include loading and setLoading
+    <AuthContext.Provider value={{ user, setUser, loading, setLoading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
