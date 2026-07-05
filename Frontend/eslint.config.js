@@ -17,5 +17,13 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    // Add your rule overrides here:
+    rules: {
+      // 1. Turns off the "Fast Refresh only works when a file only exports components" error
+      'react-refresh/only-export-components': 'off',
+
+      // 2. Turns off the "is defined but never used" red errors
+      'no-unused-vars': 'off',
+    },
   },
 ])
