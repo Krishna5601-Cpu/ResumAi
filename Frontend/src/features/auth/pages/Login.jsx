@@ -5,13 +5,18 @@ import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
   const { loading, handleLogin } = useAuth();
-  const [password, setPassword] = useState("");
-
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    handleLogin({ email, password });
   };
+
+  if (loading) {
+    return <main>Loading.....</main>;
+  }
 
   return (
     <main>
@@ -22,6 +27,9 @@ const Login = () => {
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               type="email"
               id="email"
               name="email"
@@ -31,6 +39,9 @@ const Login = () => {
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               type="password"
               id="password"
               name="password"
