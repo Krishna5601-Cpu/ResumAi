@@ -2,9 +2,11 @@ const mongoose = require("mongoose");
 
 
 /**
- * - job description schema
- * - resume text
- * - self description
+ * - job description schema : string
+ * - resume text : string
+ * - self description : string
+ * 
+ * matchScore: number
  * 
  * technical questions : [{
  * 
@@ -29,7 +31,11 @@ const mongoose = require("mongoose");
  * enum: ["Low", "Medium", "High"]
  * }
  * }]
- * preparation plan 
+ * preparation plan : [{
+ * day : number
+ * focus: string
+ * tasks: string
+ * }]
  */
 
 const interviewReportModel = new mongoose.Schema(
