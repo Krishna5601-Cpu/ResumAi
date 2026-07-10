@@ -246,67 +246,108 @@ const interviewReportSchema = {
     "preparationPlan",
   ],
 };
-
 async function generateInterviewReport({
   resume,
   selfDescription,
   jobDescription,
 }) {
+
   const prompt = `
 You are an expert technical interviewer and career coach.
 
 Analyze the candidate against the job description.
 
-Return ONLY valid JSON matching the provided schema.
+IMPORTANT RULES:
 
-JOB DESCRIPTION:
+- Return ONLY valid JSON.
+- Do NOT write explanations.
+- Do NOT use markdown.
+- Do NOT wrap the JSON in \`\`\`.
+- Do NOT write any text before or after the JSON.
+- Every required field must exist.
+- The output MUST exactly follow this JSON schema.
+
+SCHEMA:
+
+${JSON.stringify(interviewReportSchema, null, 2)}
+
+----------------------------------------------------
+
+JOB DESCRIPTION
+
 ${jobDescription}
 
--------------------------
+----------------------------------------------------
 
-CANDIDATE RESUME:
+RESUME
+
 ${resume}
 
--------------------------
+----------------------------------------------------
 
-CANDIDATE SELF DESCRIPTION:
+SELF DESCRIPTION
+
 ${selfDescription}
 `;
 
   try {
+
     const response = await client.chat.completions.create({
       model: "sharanga",
+
+      temperature: 0.3,
 
       messages: [
         {
           role: "system",
-          content:
-            "You are an expert interviewer and career coach. Follow the JSON schema exactly.",
+          content: `
+You are an expert technical interviewer.
+
+You ONLY output raw JSON.
+
+Never explain.
+
+Never apologize.
+
+Never use markdown.
+
+Never wrap JSON inside triple backticks.
+
+If information is missing, make reasonable assumptions but ALWAYS return valid JSON.
+`
         },
         {
           role: "user",
-          content: prompt,
-        },
-      ],
-
-      response_format: {
-        type: "json_schema",
-        json_schema: {
-          name: "interview_report",
-          strict: true,
-          schema: interviewReportSchema,
-        },
-      },
+          content: prompt
+        }
+      ]
     });
 
-    return JSON.parse(
-      response.choices[0].message.content
-    );
+    const content = response.choices[0].message.content.trim();
+
+    console.log("\n========== MODEL OUTPUT ==========\n");
+    console.log(content);
+    console.log("\n==================================\n");
+
+    // Remove markdown if model accidentally returns it
+    const cleaned = content
+      .replace(/^```json/i, "")
+      .replace(/^```/i, "")
+      .replace(/```$/i, "")
+      .trim();
+
+    return JSON.parse(cleaned);
+
   } catch (error) {
-    console.error(
-      "Failed to generate interview report:",
-      error
-    );
+
+    console.error("Failed to generate interview report:");
+
+    if (error.response) {
+      console.error(error.response.data);
+    }
+
+    console.error(error);
+
     throw error;
   }
 }
