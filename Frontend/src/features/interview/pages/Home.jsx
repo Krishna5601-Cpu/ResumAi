@@ -1,8 +1,10 @@
 import React from "react";
+import "../style/home.scss";
 
 const Home = () => {
   return (
     <main className="home">
+      <div className="interview-input-group"></div>
       <div className="left">
         <textarea
           name="jobDescription"
@@ -13,8 +15,10 @@ const Home = () => {
 
       <div className="right">
         <div className="input-group">
-          <label htmlFor="resume">Upload Resume...</label>
-          <input type="file" name="resume" id="resume" accept=".pdf" />
+          <label className="file-label" htmlFor="resume">
+            Upload Resume...
+          </label>
+          <input hidden type="file" name="resume" id="resume" accept=".pdf" />
         </div>
 
         <div className="input-group">
