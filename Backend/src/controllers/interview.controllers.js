@@ -1,6 +1,7 @@
 const pdfParse = require("pdf-parse");
 const generateInterviewReport = require("../services/ai.service");
-const interviewReportModel = require("../models/interviewReport.model")
+const interviewReportModel = require("../models/interviewReport.model");
+const { json } = require("express");
 
 async function generateInterviewReportController(req, res) {
 
@@ -30,11 +31,32 @@ async function generateInterviewReportController(req, res) {
     interviewReport,
   })
 
-}
+};
 
+async function getInterviewReportByIdController(req, res) {
+  const { interviwId } = req.params;
+
+  const interviewReport = await interviewReportModel.findOne({
+    _id: interviewId,
+    user: req.user.id
+  });
+
+  if (!interviewReport) {
+    return res.status(404).json({
+      message: "Interview report not found"
+    })
+  };
+
+  res.status(200).json({
+    message: "Interview report fetched successfully",
+    interviewReport,
+  })
+
+}
 
 module.exports = {
 
   generateInterviewReportController,
+  getInterviewReportByIdController,
 
 };
