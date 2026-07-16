@@ -52,6 +52,10 @@ async function getInterviewReportByIdController(req, res) {
     interviewReport,
   })
 
+};
+
+async function getAllInterviewReportsController(req, res) {
+  
 }
 
 module.exports = {

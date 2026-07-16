@@ -20,8 +20,16 @@ interviewRouter.post("/", authMiddleware.authUser, upload.single("resume"), inte
  * @access private
  */
 
-interviewRouter.get("/report/:interviewId", authMiddleware.authUser, getInterviewReportByIdController)
+interviewRouter.get("/report/:interviewId", authMiddleware.authUser, getInterviewReportByIdController);
 
+/**
+ * @route Get /api/interview
+ * @description get all the reports of the logged in user.
+ * @access private
+ * 
+ */
+
+interviewRouter.get("/", authMiddleware.authUser, getAllInterviewReportsController);
 
 
 module.exports = interviewRouter;
