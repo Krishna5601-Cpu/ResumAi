@@ -6,7 +6,7 @@ main {
   justify-content: center;
   align-items: center;
 
-  form-container {
+  .form-container {
     min-width: 350px;
 
     display: flex;
@@ -24,7 +24,7 @@ main {
     display: flex;
     flex-direction: column;
 
-    gap: 0.75rem;
+    gap: 0.5rem;
 
     input {
       border: none;
@@ -36,7 +36,7 @@ main {
   }
 
   a {
-    text-decoration: none;
     color: #e1034d;
+    text-decoration: none;
   }
 }

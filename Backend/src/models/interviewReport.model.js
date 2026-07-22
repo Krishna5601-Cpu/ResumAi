@@ -1,45 +1,6 @@
 const mongoose = require('mongoose');
 
 
-
-/**
- * - job description schema : string
- * - resume text : string
- * - self description : string
- * 
- * matchScore: number
- * 
- * technical questions : [{
- * 
- * question: "",
- * intention: "",
- * answer: ""
- * 
- * }]
- * 
- * behavioural questions : [{
- * 
- * question: "",
- * intention: "",
- * answer: ""
- * 
- * }]
- * 
- * skill gaps : [{
- * skills: "",
- * sevirity: {
- * type: string
- * enum: ["Low", "Medium", "High"]
- * }
- * }]
- * preparation plan : [{
- * day : number
- * focus: string
- * tasks: string
- * }]
- */
-
-
 const technicalQuestionSchema = new mongoose.Schema({
   question: {
     type: String,
